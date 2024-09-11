@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (event) => {
         if (!validateForm()) {
             event.preventDefault();
+             window.location.href = "https://christuniversity.in/";
         }
     });
 
