@@ -75,39 +75,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-   const validateDOB = () => {
-    const dob = new Date(dobInput.value);
-    const today = new Date();
+    const validateDOB = () => {
+        const dob = new Date(dobInput.value);
+        const today = new Date();
+        
+        if (isNaN(dob.getTime())) { // Check if the date is invalid
+            dobInput.classList.add("invalid");
+            dobInput.classList.remove("valid");
+            document.getElementById("dobError").textContent = "Invalid date.";
+            return false;
+        }
+        
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+        const d = today.getDate() - dob.getDate();
+        
+        if (m < 0 || (m === 0 && d < 0)) {
+            age--;
+        }
+        
+        const errorMessage = document.getElementById("dobError");
+        if (age >= 18) {
+            dobInput.classList.add("valid");
+            dobInput.classList.remove("invalid");
+            errorMessage.textContent = "";
+            return true;
+        } else {
+            dobInput.classList.add("invalid");
+            dobInput.classList.remove("valid");
+            errorMessage.textContent = "You must be at least 18 years old.";
+            return false;
+        }
+    };
     
-    if (isNaN(dob.getTime())) { // Check if the date is invalid
-        dobInput.classList.add("invalid");
-        dobInput.classList.remove("valid");
-        document.getElementById("dobError").textContent = "Invalid date.";
-        return false;
-    }
-    
-    let age = today.getFullYear() - dob.getFullYear();
-    const m = today.getMonth() - dob.getMonth();
-    const d = today.getDate() - dob.getDate();
-    
-    if (m < 0 || (m === 0 && d < 0)) {
-        age--;
-    }
-    
-    const errorMessage = document.getElementById("dobError");
-    if (age >= 18) {
-        dobInput.classList.add("valid");
-        dobInput.classList.remove("invalid");
-        errorMessage.textContent = "";
-        return true;
-    } else {
-        dobInput.classList.add("invalid");
-        dobInput.classList.remove("valid");
-        errorMessage.textContent = "You must be at least 18 years old.";
-        return false;
-    }
-};
-
 
     const validateForm = () => {
         return validateFullName() && validateEmail() && validatePassword() && validateConfirmPassword() && validateDOB();
@@ -125,7 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (event) => {
         if (!validateForm()) {
             event.preventDefault();
-             window.location.href = "https://christuniversity.in/";
+        }
+        else{
+            event.preventDefault();
+            window.location.href = "https://christuniversity.in/";
         }
     });
 
